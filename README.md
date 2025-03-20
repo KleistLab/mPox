@@ -1,0 +1,109 @@
+# Mpox Berlin
+
+This repository contains codes to simulate the 2022 mpox outbreak in the Berlin MSM community using a temporal adaptive contact network. It can be used to recreate all results and figures of the manuscript [Transient behavior changes and depletion of susceptibles in high contact groups led to case decline during 2022 mpox outbreak in MSM in Berlin]().
+The simulation codes are an adaptation of [HAS](https://github.com/KleistLab/HAS/tree/main).
+
+## System requirements 
+
+### Operating System
+
+This workflow was tested on macOS Sonoma Version 14.4.1 and CentOS Linux 7 (Core). 
+
+### Prerequisites
+#### Python
+
+version 3.11.6
+
+Packages:
+
+numpy,
+scipy,
+pandas,
+time,
+sys,
+cython
+
+## Simulations
+
+The code for the simulations are contained in [scripts/HAS_final](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final) and [scripts/HAS_final_immune](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final_immune). The former is used to simulate the 2022 mpox outbreak, the latter is used to simulate imports on a immunized network.
+
+
+### Compilation
+
+Before the first execution, the code must be compiled. Navigate to the folder [scripts/HAS_final](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final) or [scripts/HAS_final_immune](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final_immune) and execute the following command
+
+```
+python setup.py build_ext --inplace
+```
+
+## Execution 
+
+Please create a repository with parameter files and a repository in which the results should be stored.
+The simulations were conducted on computer clusters and are not desinged to run on a personal computer.
+
+### HAS final
+
+The following files must be provided (details can be found in the manuscript and the [jupyter notebook](https://github.com/KleistLab/mPox/blob/main/main_2022_outbreak.ipynb)):
+- diseases_parameters.csv
+- population.csv
+- reported_cases.npy
+- sampled_parameters.csv
+- vaccination_timeline.npy
+
+Navigate to the repository [scripts/HAS_final](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final) and execute
+```
+python run.py START END REPOSITORY LL
+```
+Where `START` is the first and `END` is the last index of `sampled_parameters.csv`, for which the simulations are performed and `REPOSITORY` is the name of the correspoing repository within the parameter repository and the result repository.
+`LL` is an optional argument, which creates the file `has_result_agent_info_*index*` for all simulations with loglikelihood greater than LL.
+
+
+The following files are created in the folder *results*, with the following structure:
+```
+|-- results
+	|-- REPOSITORY
+ 		|-- has_result_D_cum_*START*_*END*.csv  # Number of diagnosed agents per time step (column) and simulation (row)
+		|-- has_result_I_cum_*START*_*END*.csv  # Number of infected agents per time step (column) and simulation (row)
+		|-- has_result_I_degree_list_*START*_*END*.csv  # List of degrees of infected agents per simulation
+		|-- has_result_lambda_*START*_*END*.csv  # Expected number of contacts per time unit per time step (column) and simulation (row)
+		|-- has_result_R_lambda_*START*_*END*.csv  # Expected number of contacts of recovered agents per time unit per time step (column) and simulation (row)
+		|-- has_result_R_*START*_*END*.csv  # Number of recovererd agents per time step (column) and simulation (row)
+		|-- has_result_M_*START*_*END*.csv  # Number of contact reduced agents per time step (column) and simulation (row)
+		|-- has_result_mean_degree_I_*START*_*END*.csv  # Expected number of contacts per time unit of infected agents per time step (column) and simulation (row)
+		
+```
+
+### HAS final immune
+
+The following files must be provided (details can be found in the manuscript and the [jupyter notebook](https://github.com/KleistLab/mPox/blob/main/main_future_outbreak.ipynb):
+- diseases_parameters.csv
+- population.csv
+- reported_cases.npy
+- sampled_parameters.csv
+- has_result_agent_info_*index*
+
+
+Navigate to the repository [scripts/HAS_final_immune](https://github.com/KleistLab/mPox/tree/main/scripts/HAS_final_immune) and execute
+```
+python run.py START END REPOSITORY
+```
+Where `START` is the first and `END` is the last index of `sampled_parameters.csv`, for which the simulations are performed and `REPOSITORY` is the name of the correspoing repository within the parameter repository and the result repository.
+
+The following files are created in the folder *results*, with the following structure:
+```
+|-- results
+	|-- REPOSITORY
+ 		|-- has_result_D_cum_*START*_*END*.csv  # Number of diagnosed agents per time step (column) and simulation (row)
+		|-- has_result_I_cum_*START*_*END*.csv  # Number of infected agents per time step (column) and simulation (row)
+		|-- has_result_R0_*START*_*END*.csv  # Effective reproduction number per time step (column) and simulation (row)
+```
+
+
+
+## Manuscript
+
+All unedited manuscript figures and data can be generated by executing the commands in main_2022_outbreak.ipynb (Fig 1 - Fig 4) and main_future_outbreak.ipynb (Fig 5).
+
+
+
+
