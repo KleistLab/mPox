@@ -1,0 +1,2 @@
+incubation_rate,recovery_rate,number_infectious_compartments,return_vacc,return_unvacc,second_dose
+1,2.5,5,0.0461100800678369,0.0316149356535592,7745
