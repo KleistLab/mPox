@@ -1,7 +1,7 @@
 # Mpox Berlin
 
 ![](https://img.shields.io/github/v/release/kleistlab/mpox)
-[![DOI](https://zenodo.org/badge/17012304.svg)](https://zenodo.org/badge/latestdoi/17012304)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17012304.svg)](https://doi.org/10.5281/zenodo.17012304)
 
 This repository contains codes to simulate the 2022 mpox outbreak in the Berlin MSM community using a temporal adaptive contact network. It can be used to recreate all results and figures of the manuscript [Transient behavior changes and depletion of susceptibles in high contact groups led to case decline during 2022 mpox outbreak in MSM in Berlin](https://www.researchsquare.com/article/rs-6254021/latest).
 The simulation codes are an adaptation of [HAS](https://github.com/KleistLab/HAS/tree/main).
